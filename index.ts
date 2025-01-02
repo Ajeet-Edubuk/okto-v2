@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/cv", cvRouter);
+app.use("/api/v1/cv", cvRouter);
 
 app.get("/", (req: Request, res: Response) => {
   return res.json({
