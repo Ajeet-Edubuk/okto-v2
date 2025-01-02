@@ -5,15 +5,16 @@ import cvRouter from "../routers/cv.router";
 import bodyParser from "body-parser";
 import cors from "cors";
 
+// Initialize dotenv and Express app
+config();
 const app = express();
 
-config();
-
-
+// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Routes
 app.use("/cv", cvRouter);
 
 app.get("/", (req: Request, res: Response) => {
@@ -22,7 +23,8 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-app.listen(process.env.PORT, () => {
-  MongoConnection();
-  console.log("Backend running on PORT:", process.env.PORT);
-});
+// Connect to MongoDB once
+MongoConnection();
+
+// Export the app as a Vercel serverless function
+export default app;
