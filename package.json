@@ -1,7 +1,7 @@
 {
   "name": "cvonblockchain",
   "version": "1.0.0",
-  "main": "./index.ts",
+  "main": "./api/index.ts",
   "scripts": {
     "dev": "nodemon",
     "build": "npm install && npx tsc",

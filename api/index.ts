@@ -8,7 +8,7 @@ import cors from "cors";
 // Initialize dotenv and Express app
 config();
 const app = express();
-
+MongoConnection();
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -23,8 +23,7 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-// Connect to MongoDB once
-MongoConnection();
+
 
 // Export the app as a Vercel serverless function
 export default app;
