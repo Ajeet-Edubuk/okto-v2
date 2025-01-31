@@ -47,11 +47,11 @@ type PersonalDetailsType = {
   profession: string;
   imageUrl: string;
   phoneNumber: string;
-  linkedinProfile:string;
-  twitterProfile:string;
-  telegramProfile:string;
-  instagramProfile:string;
-  githubProfile:string;
+  linkedinProfile?:string;
+  twitterProfile?:string;
+  telegramProfile?:string;
+  instagramProfile?:string;
+  githubProfile?:string;
   years_of_experience: string;
 };
 
@@ -92,11 +92,11 @@ interface RequestBodyType {
   profession: string;
   imageUrl: string;
   phoneNumber: string;
-  linkedinProfile:string;
-  twitterProfile:string;
-  telegramProfile:string;
-  instagramProfile:string;
-  githubProfile:string;
+  linkedinProfile?:string;
+  twitterProfile?:string;
+  telegramProfile?:string;
+  instagramProfile?:string;
+  githubProfile?:string;
   Years_of_experience: string;
   profile_summary: string;
   class10SchoolName: string;
@@ -178,7 +178,7 @@ export const createCv = async (req: Request, res: Response) => {
       profileSummaryVerification,
     } = req.body as RequestBodyType;
 
-    console.log("under",underGraduateDuration)
+    console.log("undergraduate duration",underGraduateDuration)
     if (
       !loginMailId ||
       !name ||
@@ -187,7 +187,6 @@ export const createCv = async (req: Request, res: Response) => {
       !profession ||
       !imageUrl ||
       !phoneNumber ||
-      !Years_of_experience ||
       !profile_summary
     ) {
       return res

@@ -17,10 +17,11 @@ type personalDetailsObjectType = {
   phoneNumber: string;
   profession: string;
   imageUrl: string;
-  linkedinProfile:string;
-  twitterProfile:string;
-  telegramProfile:string;
-  instagramProfile:string;
+  linkedinProfile?:string;
+  twitterProfile?:string;
+  telegramProfile?:string;
+  instagramProfile?:string;
+  githubProfile?:string;
   years_of_experience: string;
 };
 type EducationObjectType = {
@@ -112,10 +113,11 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
       profession: { type: String, required: true },
       imageUrl: { type: String, required: true },
       phoneNumber: { type: String, required: true },
-      linkedinProfile:{type:String, required:true},
-      twitterProfile:{type:String, required:true},
-      telegramProfile:{type:String, required:true},
-      instagramProfile:{type:String, required:true},
+      linkedinProfile:{type:String},
+      twitterProfile:{type:String},
+      telegramProfile:{type:String},
+      instagramProfile:{type:String},
+      githubProfile:{type:String},
       years_of_experience: { type: String, required: true },
     },
     education: {

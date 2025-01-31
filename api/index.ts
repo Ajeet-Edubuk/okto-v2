@@ -9,8 +9,14 @@ import cors from "cors";
 config();
 const app = express();
 MongoConnection();
+// allow specific origin
+const corsOptions = {
+  origin: "https://www.edubukcvonchain.com",
+  methods: "GET,POST,PUT,DELETE",
+  credentials: true,
+};
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -23,7 +29,9 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-
-
+app.listen(process.env.PORT, () => {
+  MongoConnection();
+  console.log("Backend running on PORT:", process.env.PORT);
+});
 // Export the app as a Vercel serverless function
 export default app;
