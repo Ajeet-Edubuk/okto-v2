@@ -1,12 +1,10 @@
 
 import crypto from "crypto";
 import Coupon from "../models/payment.model";
-import axios from "axios";
 import { Request,Response } from "express";
 import Razorpay from "razorpay";
 import { config } from "dotenv";
 config();
-
 
 const keyId = process.env.RZP_KEY_ID;
 const keySecret = process.env.RZP_SECRET_KEY;
@@ -25,6 +23,7 @@ export const checkout = async (req:Request,res:Response) => {
     "amount": Number(req.body.amount),
     "currency": "INR",
   };
+  
   const order = await instance.orders.create(options);
 
   res.status(200).json({
@@ -47,7 +46,7 @@ export const paymentVerification = async (req:Request, res:Response) => {
     .digest("hex");
 
   const isAuthentic = expectedSignature === razorpay_signature;
-  console.log("Auth :",isAuthentic)
+  //console.log("Auth :",isAuthentic)
   if (isAuthentic) {
     if(couponCode)
     {
@@ -70,7 +69,7 @@ export const paymentVerification = async (req:Request, res:Response) => {
     let withoutCoupon = new Coupon({ code:"withoutCode",transactions:[{logginedMailId:userMailId,paymentId:razorpay_payment_id,paymentStatus:true,cvSubmittedStatus:false}] });
       await withoutCoupon.save();
   }
-    res.status(200).send({
+    res.status(200).json({
       success:true,
       paymentId:razorpay_payment_id,
     });
@@ -99,14 +98,14 @@ export const checkCvSubmittedStatus= async(req:Request,res:Response)=>{
 
     if(transaction)
     {
-      res.status(200).send({
+      res.status(200).json({
         success:true,
         value:transaction.cvSubmittedStatus
       })
     }
     else
     {
-      res.status(404).send({
+      res.status(404).json({
         success:false,
         message:`No transaction found with paymentId:${paymentId}`
       })
@@ -135,20 +134,20 @@ export const updateCvSubmittedStatus = async(req:Request,res:Response)=>{
     )
     if(updatedCVStatus)
     {
-      res.status(200).send({
+      res.status(200).json({
         success:true,
         message:"cv submitted successfully",
       })
     }
     else
     {
-      res.status(404).send({
+      res.status(404).json({
         success:false,
         message:"invalid paymentId",
       })
     }
   } catch (error) {
-    res.status(501).send({
+    res.status(501).json({
       success:false,
       message:"something went wrong",
       err:error
@@ -158,7 +157,7 @@ export const updateCvSubmittedStatus = async(req:Request,res:Response)=>{
 
 export const couponVerification= async(req:Request,res:Response)=>{
   try {
-    const {couponCode} = req.body;
+    const {couponCode} = req.params;
     console.log("couponcode ",couponCode)
     let currPrice=499;
     switch (couponCode) {
@@ -217,18 +216,18 @@ export const couponVerification= async(req:Request,res:Response)=>{
         currPrice=89;
         break;
       default:
-      res.send({
+      res.status(200).json({
           success:false,
           value:currPrice
         })
     }
     if(currPrice!==499)
-    res.send({
+    res.status(200).json({
       success:true,
       value:currPrice
     })
   } catch (error) {
-    res.status(501).send({
+    res.status(501).json({
       success:false,
       message:"error while coupon verification",
       error
@@ -236,30 +235,4 @@ export const couponVerification= async(req:Request,res:Response)=>{
   }
 }
 
-export const createCW = async (req:Request,res:Response) => {
-  
-  const data = {
-    network_name:"POLYGON",
-    purpose: "token",
-  };
-  try {
-    const cwData = await axios.post(
-      "https://apigw.okto.tech/s2s/api/v1/wallet",
-      data,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "X-Api-Key":"b26f7c9c-8dc9-4238-ab49-fe90e86ad354",
-        },
-      }
-    );
-    if (cwData) {
-      console.log("cwData", cwData);
-      res.status(200).send({
-        success:true,
-      })
-    }
-  } catch (error) {
-    console.log("error while creating CW...");
-  }
-};
+

@@ -18,37 +18,48 @@ interface transactionObject{
 
 export const createTreasuryWallet = async (req: Request, res: Response) => {
   try {
-    const { network_name, purpose } = req.body;
-    if (!network_name || !purpose) {
-        return res.status(400).json({
-            success: false,
-            message: "Network name or purpose is missing.",
-        });
-    }
-    const createCW = await axios.post(
-      `${oktoBaseUrl}/s2s/api/v1/wallet`,
-      {
-        network_name: network_name,
-        purpose: purpose,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "X-Api-Key": XApiKey,
-        },
+      const { network_name, purpose } = req.body;
+
+      if (!network_name || !purpose) {
+          return res.status(400).json({
+              success: false,
+              message: "Network name or purpose is missing.",
+          });
       }
-    );
-    return res.status(200).json({
-      success: true,
-      message: "Treasury wallet created successfully.",
-      data: createCW.data,
-    });
-  } catch (error) {
-    res.send(500).send({
-      success: false,
-      message: "error while creating treasury wallet",
-      error: error,
-    });
+
+      if (!oktoBaseUrl || !XApiKey) {
+          return res.status(500).json({
+              success: false,
+              message: "Missing API base URL or API key.",
+          });
+      }
+
+      console.log("baseurl:", oktoBaseUrl, "APIKey:", XApiKey);
+
+      const createCW = await axios.post(
+          `${oktoBaseUrl}/s2s/api/v1/wallet`,
+          { network_name, purpose },
+          {
+              headers: {
+                  "Content-Type": "application/json",
+                  "X-Api-Key": XApiKey,
+              },
+          }
+      );
+
+      return res.status(200).json({
+          success: true,
+          message: "Treasury wallet created successfully.",
+          data: createCW.data,
+      });
+  } catch (error: any) {
+      console.error("Error creating treasury wallet:", error?.response?.data || error.message);
+
+      return res.status(error?.response?.status || 500).json({
+          success: false,
+          message: "Error while creating treasury wallet",
+          error: error?.response?.data || error.message,
+      });
   }
 };
 
@@ -87,7 +98,7 @@ export const executeRawTransaction = async(req:Request,res:Response)=>
             data:tx.data
         })
     } catch (error) {
-        res.status(500).send({
+        res.status(500).json({
             success:false,
             message:"Error while executing transaction",
             error
@@ -147,6 +158,42 @@ export const getBulkOrderDetails  = async(req:Request, res:Response)=>{
           error:error
         })
     }
+}
+
+export const readContract = async(req:Request,res:Response)=>{
+  try {
+    const {network_name,data} = req.body;
+    if(!network_name || !data)
+    {
+      return res.status(400).json({
+        success:false,
+        message:"network name and data are required !"
+      })
+    }
+    const tx = await axios.post(`${oktoBaseUrl}/s2s/api/v2/readContractData`,{
+      "network_name":network_name,
+      "data":data
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "X-Api-Key":XApiKey,
+      },
+    }
+    )
+
+    return res.status(200).json({
+      success:true,
+      data:tx.data
+    })
+    
+  } catch (error) {
+    return res.status(500).json({
+      success:false,
+      message:"error while reading smart contract",
+      error:error
+    })
+  }
 }
 
 

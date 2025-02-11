@@ -755,13 +755,13 @@ export const verifyDoc = async (req: Request, res: Response) => {
     } else {
       // Handle unsupported content types
       console.log("Unsupported content type", contentType);
-      res.status(415).send({
+      res.status(415).json({
         success: false,
         message: "Unsupported content type",
       });
     }
   } catch (error) {
-    res.status(500).send({
+    res.status(500).json({
       success: false,
       message: "Error while getting user data",
       error,

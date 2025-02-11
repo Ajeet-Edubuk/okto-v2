@@ -10,13 +10,9 @@ config();
 const app = express();
 MongoConnection();
 // allow specific origin
-const corsOptions = {
-  origin: "https://www.edubukcvonchain.com",
-  methods: "GET,POST,PUT,DELETE",
-  credentials: true,
-};
 // Middleware
-app.use(cors(corsOptions));
+app.use(cors());
+
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

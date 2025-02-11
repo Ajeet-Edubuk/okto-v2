@@ -10,7 +10,7 @@ router.get("/getCv/:id", getCv);
 router.get("/getCvIds/:email",getAllCvIds)
 router.get("/verifyDoc/:pinataHash/:field/:subfield/:nanoId",verifyDoc);
 router.put("/verifyDoc/:pinataHash/:field/:subfield/:nanoId", verifyDoc);
-router.get("/coupon_verify",couponVerification);
+router.get("/coupon_verify/:couponCode",couponVerification);
 router.post("/checkout",checkout);
 router.post("/payment_verification",paymentVerification);
 router.get("/check_cv_status/:paymentId",checkCvSubmittedStatus);
