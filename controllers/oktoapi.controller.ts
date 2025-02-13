@@ -79,7 +79,7 @@ export const executeRawTransaction = async(req:Request,res:Response)=>
                 "network_name":network_name,
                 "transaction":{
                   "from":cwAdd, // central wallet
-                  "to": "0xB00812e3154786BB29905E2448C179CD49b77182", // contract address
+                  "to": "0x3193852D4ac3154C001ca420841118917Efed680", // contract address
                   "data": data, //abi encoded data
                   "value": "0",
                 }
