@@ -24,13 +24,13 @@ export const uploadFileController = async (req: MulterRequest, res: Response) =>
       return;
     }
 
-    if (userFile.size > 512000) {
-      res.status(400).json({
-        success: false,
-        error: "File size should be less than 500KB"
-      });
-      return;
-    }
+    // if (userFile.size > 512000) {
+    //   res.status(400).json({
+    //     success: false,
+    //     error: "File size should be less than 500KB"
+    //   });
+    //   return;
+    // }
 
     const fileBuffer = userFile.buffer;
     const fileHash = crypto.createHash("sha256").update(fileBuffer).digest("hex");
