@@ -94,11 +94,7 @@ interface cvSchemaDataType extends Document {
   projectsVerifications: ProjectVerificationType;
   profileSummaryVerification: ProfileSummaryVerificationType;
 }
-enum statusType {
-  pending = "pending",
-  approved = "approved",
-  rejected = "rejected",
-}
+
 const CvSchema: Schema<cvSchemaDataType> = new Schema(
   {
     nanoId: {
@@ -246,11 +242,7 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
           default: [],
         },
         // TODO: mail status;
-        mailStatus: {
-          type: String,
-          enum: Object.values(statusType),
-          default: statusType.pending,
-        },
+
       },
       class12: {
         isSelfAttested: {
@@ -262,11 +254,6 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
           default: [],
         },
         // TODO: mail status;
-        mailStatus: {
-          type: String,
-          enum: Object.values(statusType),
-          default: statusType.pending,
-        },
       },
       undergraduation: {
         isSelfAttested: {
@@ -278,11 +265,7 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
           default: [],
         },
         // TODO: mail status;
-        mailStatus: {
-          type: String,
-          enum: Object.values(statusType),
-          default: statusType.pending,
-        },
+
       },
       postgraduation: {
         isSelfAttested: {
@@ -294,11 +277,6 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
           default: [],
         },
         // TODO: mail status;
-        mailStatus: {
-          type: String,
-          enum: Object.values(statusType),
-          default: statusType.pending,
-        },
       },
     },
     // step 3;
@@ -313,11 +291,7 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
           type: [String],
           default: [],
         },
-        mailStatus: {
-          type: String,
-          enum: Object.values(statusType),
-          default: statusType.pending,
-        },
+
         // TODO: mail status;
       },
     },
@@ -333,11 +307,7 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
           type: [String],
           default: [],
         },
-        mailStatus: {
-          type: String,
-          enum: Object.values(statusType),
-          default: statusType.pending,
-        },
+
         // TODO: mail status;
       },
     },
@@ -354,11 +324,7 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
           type: [String],
           default: [],
         },
-        mailStatus: {
-          type: String,
-          enum: Object.values(statusType),
-          default: statusType.pending,
-        },
+
         // TODO: mail status;
       },
     },
@@ -374,11 +340,7 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
           type: [String],
           default: [],
         },
-        mailStatus: {
-          type: String,
-          enum: Object.values(statusType),
-          default: statusType.pending,
-        },
+
         // TODO: mail status;
       },
     },

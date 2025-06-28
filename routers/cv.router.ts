@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { createCv, getAllCvIds, getCv,verifyDoc } from "../controllers/cv.controller";
 import { checkCvSubmittedStatus, checkout, couponVerification, paymentVerification, updateCvSubmittedStatus } from "../controllers/payment.controller";
-import { createTreasuryWallet, executeRawTransaction, getBulkOrderDetails } from "../controllers/oktoapi.controller";
+import { createTreasuryWallet, getOrderHistory} from "../controllers/oktoapi.controller";
+import { rawTransaction } from "../controllers/rawTransaction";
 
 const router = Router();
 
@@ -16,7 +17,8 @@ router.post("/payment_verification",paymentVerification);
 router.get("/check_cv_status/:paymentId",checkCvSubmittedStatus);
 router.put("/update_cv_status",updateCvSubmittedStatus);
 router.post("/createCW",createTreasuryWallet);
-router.post("/exerawtx",executeRawTransaction);
-router.get("/get_bulkorder_details/:twUserId/:bulkOrderId",getBulkOrderDetails)
+router.post("/exerawtx",rawTransaction);
+router.get("/gettxstatus/:intentId/:intentType",getOrderHistory);
+//router.get("/get_bulkorder_details/:twUserId/:bulkOrderId",getBulkOrderDetails)
 
 export default router;
