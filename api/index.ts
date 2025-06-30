@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import { MongoConnection } from "../database/mongo.connection";
 import cvRouter from "../routers/cv.router";
 import uploadRouter from "../routers/upload.router";
+import qrRoute from "../routers/qr.router";
 import bodyParser from "body-parser";
 import cors from "cors";
 
@@ -19,7 +20,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 app.use("/cv", cvRouter);
-app.use("/file",uploadRouter)
+app.use("/file",uploadRouter);
+app.use("/qr", qrRoute);
 app.get("/", (req: Request, res: Response) => {
   return res.json({
     message: "Health is ok !",
