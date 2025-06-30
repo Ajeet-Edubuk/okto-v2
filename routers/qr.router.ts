@@ -3,6 +3,7 @@ import { dynamicQrUrlMap, dynamicQrRedirect } from "../controllers/dynamicQr.Con
 
 const router = Router();
 
+//router
 router.post("/url-map", dynamicQrUrlMap);
 router.get("/:id", dynamicQrRedirect);
 
